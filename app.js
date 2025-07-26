@@ -10,6 +10,7 @@ function verificarIntento(){
     if(numeroDeUsuario === numeroSecreto){
       document.getElementById("reiniciar").removeAttribute("disabled");
       asignarTextoElemento("p",`Acertaste el numero en el intento numero: ${intentos}`);
+      document.getElementById("intentar").setAttribute('disabled', 'true');
     }else{
       asignarTextoElemento("p",`Intenta con un numero ${numeroDeUsuario > numeroSecreto? "menor":"mayor"}`);
     }
@@ -27,7 +28,10 @@ function verificarIntento(){
 
 function reiniciarJuego(){
     condicionesIniciales();
+    document.getElementById("reiniciar").setAttribute('disabled', 'true');
+    document.getElementById("intentar").removeAttribute("disabled");
     limpliarCaja();
+    document.getElementById("imagen").setAttribute('src', 'img/ia.png');
     return;
 }
 
@@ -44,7 +48,6 @@ function asignarTextoElemento(elemento, texto){
 function generarNumeroSegreto(){
     let numeroGenerado = Math.floor(Math.random()*10)+1;
     if (listaNumerosSorteados.length === numeroMaximo) {
-        document.getElementById("intentar").setAttribute('disabled', 'true');
         return;
     }
 
@@ -63,8 +66,20 @@ numeroSecreto = generarNumeroSegreto();
 asignarTextoElemento("h1", "Juego del numero secreto");
 asignarTextoElemento("p", `Elige un numero del 1 al ${numeroMaximo}`);
 intentos = 1;
-document.getElementById("reiniciar").setAttribute('disabled',String);
+document.getElementById("reiniciar").setAttribute('disabled', 'true');
+document.getElementById("intentar").removeAttribute("disabled");
+document.getElementById("pista").removeAttribute("disabled");
 return;
+}
+
+function mostrarPista(){
+    let dica = `El numero secreto es ${numeroSecreto}`;
+    asignarTextoElemento("p", dica);
+    document.getElementById("pista").setAttribute('disabled', 'true');
+    document.getElementById("intentar").setAttribute('disabled', 'true');
+    document.getElementById("reiniciar").removeAttribute("disabled");
+    document.getElementById("imagen").setAttribute('src', 'img/iaSad.png');
+    return;
 }
 
 condicionesIniciales();
