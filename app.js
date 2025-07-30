@@ -72,9 +72,10 @@ document.getElementById("pista").removeAttribute("disabled");
 return;
 }
 
+
 function mostrarPista(){
-    let dica = `El numero secreto es ${numeroSecreto}`;
-    asignarTextoElemento("p", dica);
+    let texto = `El numero secreto es ${numeroSecreto}`;
+    asignarTextoElemento("p", texto);
     document.getElementById("pista").setAttribute('disabled', 'true');
     document.getElementById("intentar").setAttribute('disabled', 'true');
     document.getElementById("reiniciar").removeAttribute("disabled");
@@ -83,6 +84,7 @@ function mostrarPista(){
 }
 
 condicionesIniciales();
+
 
 
 
