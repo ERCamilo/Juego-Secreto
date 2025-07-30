@@ -6,6 +6,12 @@ let numeroMaximo = 10;
 let listaNumeroASortear = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
 
+const botonIntentar = document.getElementById("intentar");
+const botonReiniciar = document.getElementById("reiniciar");
+const textoRango = document.getElementById("rango");
+const botonPista = document.getElementById("pista");
+const rangoNormalSpan = document.querySelector(".rango-normal");
+const rangoPistaSpan = document.querySelector(".rango-pista");
 
 
 function verificarIntento() {
@@ -13,23 +19,21 @@ function verificarIntento() {
     let numeroDeUsuario = parseInt(document.getElementById("valorUsuario").value);
     console.log(`introducido: ${numeroDeUsuario} secreto: ${numeroSecreto}`);
     if (numeroDeUsuario === numeroSecreto) {
-        document.getElementById("reiniciar").removeAttribute("disabled");
-
-        document.getElementById("rango").innerText = `Acertaste el numero en el intento numero: ${intentos}`;
-        document.getElementById("intentar").setAttribute('disabled', 'true');
+        botonReiniciar.removeAttribute("disabled");
+        rangoNormalSpan.innerText = `Acertaste en el intento numero: ${intentos}`;
+        botonIntentar.setAttribute('disabled', 'true');
         listaNumeroASortear = listaNumeroASortear.filter(numero => numero !== numeroDeUsuario);
 
     } else {
-        document.getElementById("rango").innerText = `Intenta con un numero ${numeroDeUsuario > numeroSecreto ? "menor" : "mayor"}`;
+        actualizarEnunciado()
     }
     if (listaNumerosSorteados.length === 10) {
-        document.getElementById("rango").innerText = "Ya se han utilizado todos los numeros posibles";
-        document.getElementById("intentar").setAttribute('disabled', 'true');
+        actualizarEnunciado();
+        botonIntentar.setAttribute('disabled', 'true');
         listaNumeroASortear = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
         listaNumerosSorteados = [];
         return;
     }
-    limpliarCaja();
     intentos++;
     return;
 }
@@ -37,9 +41,8 @@ function verificarIntento() {
 function reiniciarJuego() {
 
     condicionesIniciales();
-    document.getElementById("reiniciar").setAttribute('disabled', 'true');
-    document.getElementById("intentar").removeAttribute("disabled");
-    limpliarCaja();
+    botonReiniciar.setAttribute('disabled', 'true');
+    botonIntentar.removeAttribute("disabled");
     document.getElementById("imagen").setAttribute('src', 'img/ia.png');
     listaNumeroASortear = listaNumeroASortear.length == 0 ? [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] : listaNumeroASortear;
     actualizarEnunciado();
@@ -48,9 +51,7 @@ function reiniciarJuego() {
     return;
 }
 
-function limpliarCaja() {
-    let valueCaja = document.querySelector('#valorUsuario').value = "";
-}
+
 
 function asignarTextoElemento(elemento, texto) {
     let elementoHTML = document.querySelector(elemento);
@@ -76,18 +77,19 @@ function condicionesIniciales() {
     numeroSecreto = generarNumeroSecreto();
     asignarTextoElemento("h1", "Juego del numero secreto");
     intentos = 1;
-    document.getElementById("reiniciar").setAttribute('disabled', 'true');
-    document.getElementById("intentar").removeAttribute("disabled");
+    botonReiniciar.setAttribute('disabled', 'true');
+    botonIntentar.removeAttribute("disabled");
     document.getElementById("pista").removeAttribute("disabled");
+
     return;
 }
 
 
 function mostrarRespuesta() {
-    document.getElementById("rango").innerText = `El numero secreto es: ${numeroSecreto}`;
-    document.getElementById("pista").setAttribute('disabled', 'true');
-    document.getElementById("intentar").setAttribute('disabled', 'true');
-    document.getElementById("reiniciar").removeAttribute("disabled");
+    rangoNormalSpan.innerText  = `El numero secreto es: ${numeroSecreto}`;
+    botonPista.setAttribute('disabled', 'true');
+    botonIntentar.setAttribute('disabled', 'true');
+    botonReiniciar.removeAttribute("disabled");
     document.getElementById("imagen").setAttribute('src', 'img/iaSad.png');
     listaNumeroASortear = listaNumeroASortear.filter(numero => numero !== numeroSecreto);
     return;
@@ -98,17 +100,32 @@ actualizarEnunciado();
 
 
 function actualizarEnunciado() {
+    let textoNormal = "";
+    let textoPista = "";
+
     if (listaNumeroASortear.length > 0) {
         const min = Math.min(...listaNumeroASortear);
         const max = Math.max(...listaNumeroASortear);
-        let textoEnunciado = min === max ? `Elige el numero ${min}` : `Elige un numero del ${min} al ${max}`;
-        document.getElementById("rango").innerText = textoEnunciado;
+       textoNormal= min === max ? `Elige el numero ${min}` : `Elige un numero del ${min} al ${max}`
+       textoPista = `Números disponibles: ${listaNumeroASortear.join(", ")}`;
+
+       
     } else {
-        document.getElementById("rango").innerText = "Sin números disponibles";
+           textoNormal = "Sin números disponibles";
+           textoPista = "No hay números para mostrar la pista.";
     }
+    rangoNormalSpan.innerText = textoNormal;
+    rangoPistaSpan.innerText = textoPista;
+
 }
 
 
-function mostrarPista() {
-    document.getElementById("rango").innerText = `Números disponibles: ${listaNumeroASortear.join(", ")}`;
-}
+//funcion al precionar enter en imput verifica intento
+document.getElementById("valorUsuario").addEventListener("keypress", function(event) {
+    if (event.key === "Enter" && !botonIntentar.disabled) {
+        event.preventDefault();
+        verificarIntento();
+    }
+});
+
+

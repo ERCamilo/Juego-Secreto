@@ -6,7 +6,7 @@
 }
 
 body {
-    background: linear-gradient(#1354A5 0%, #041832 33.33%, #041832 66.67%, #01080E 100%);
+    background: linear-gradient(#4b13a5 0%, #041832 33.33%, #041832 66.67%, #01080E 100%);
     height: 100vh;
     display: flex;
     align-items: center;
@@ -15,9 +15,10 @@ body {
 
 
 body::before {
-    background-image: url("img/code.png");
+    background-image: url("img/gif1.gif");
     background-repeat: no-repeat;
-    background-position: right;
+    background-position: center;
+    background-size: cover;
     content: "";
     display: block;
     position: absolute;
@@ -55,7 +56,7 @@ body::before {
 
 .container__boton {
     border-radius: 16px;
-    background: #1875E8;
+    background: #1875e8;
     padding: 16px 24px;
     width: 100%;
     font-size: 24px;
@@ -68,12 +69,19 @@ body::before {
     background: #898989;
 }
 
+.container__boton:disabled:hover {
+    
+    color: #FFF;
+    font-weight: bold;
+
+}
+
 .container__texto {
     margin: 16px 0 16px 0;
 }
 
 .container__texto-azul {
-    color: #1875E8;
+    color: #1875e8;
 }
 
 .container__input {
@@ -108,10 +116,11 @@ p{
 button {
     font-family: 'Inter', sans-serif;
     transition: all 0.3s ease;
+    background: #954bde;
 }
 
 button:hover {
-    background: #0F5BBE;
+    background: #d756ff;
     font-weight: bold;
     transform: scale(1.05);
 }
@@ -119,9 +128,42 @@ button:hover {
 .texto__parrafo {
     font-size: 32px;
     font-weight: 400;
+    position: relative; /* Necesario para posicionar los spans absolutos */
+    min-height: 1.5em; /* Asegura que el párrafo tenga altura incluso con contenido superpuesto */
+    overflow: hidden; /* Opcional: recorta si el texto es muy largo y se sale */
+    text-align: center; /* Centra el texto si lo deseas */
 }
 
-span{
+/* Estilos comunes para ambos spans para que se superpongan */
+.rango-normal,
+.rango-pista {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    /* Asegúrate de que el color sea blanco, como en tu CSS inicial */
+    color: white; 
+    transition: opacity 0.3s ease; /* Aplica la transición a la opacidad */
+    /* Otros estilos de fuente si no los quieres en .texto__parrafo */
+}
 
-  transition: all 0.3s ease;
+/* Estado inicial: el rango normal es visible, la pista invisible */
+.rango-normal {
+    opacity: 1;
+    font-size: 30px;
+}
+
+.rango-pista {
+    opacity: 0;
+    font-size: 24px; 
+}
+
+
+/* Al hacer hover en el párrafo: */
+.texto__parrafo:hover .rango-normal {
+    opacity: 0; /* El rango normal se desvanece */
+}
+
+.texto__parrafo:hover .rango-pista {
+    opacity: 1; /* La pista aparece */
 }
