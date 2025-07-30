@@ -100,12 +100,28 @@ h1 {
     padding-bottom: 3rem;
 }
 
-p,
+p{ 
+    font-family: 'Inter', sans-serif;
+      transition: all 0.3s ease;
+}
+
 button {
     font-family: 'Inter', sans-serif;
+    transition: all 0.3s ease;
+}
+
+button:hover {
+    background: #0F5BBE;
+    font-weight: bold;
+    transform: scale(1.05);
 }
 
 .texto__parrafo {
     font-size: 32px;
     font-weight: 400;
+}
+
+span{
+
+  transition: all 0.3s ease;
 }

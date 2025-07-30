@@ -19,13 +19,15 @@
             <div class="container__informaciones">
                 <div class="container__texto">
                     <h1></h1>
-                    <p class="texto__parrafo"></p>
+                    <p class="texto__parrafo" id = "enunciado"  onmouseover="mostrarPista()" onmouseout="actualizarEnunciado()" >
+                         <span id ="rango"></span>
+                    </p>
                 </div>
                 <input type="number" id="valorUsuario" min="1" max="100" class="container__input">
                 <div class="chute container__botones">
                     <button onclick="verificarIntento();" class="container__boton" id="intentar">Intentar</button>
                     <button onclick="reiniciarJuego()" class="container__boton" id="reiniciar" disabled>Nuevo juego</button>
-                    <button onclick="mostrarPista()" class="container__boton" id="pista">Mostrar numero</button>
+                    <button onclick="mostrarRespuesta()" class="container__boton" id="pista">Mostrar numero</button>
                 </div>
             </div>
             <img id="imagen" src="img/ia.png" alt="Una persona mirando a la izquierda" class="container__imagen-persona" />
