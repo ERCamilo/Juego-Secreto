@@ -119,8 +119,6 @@ function actualizarEnunciado() {
 
 }
 
-
-//funcion al precionar enter en imput verifica intento
 document.getElementById("valorUsuario").addEventListener("keypress", function(event) {
     if (event.key === "Enter" && !botonIntentar.disabled) {
         event.preventDefault();
