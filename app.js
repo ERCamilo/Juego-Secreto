@@ -1,129 +1,149 @@
-
 let numeroSecreto = 0;
 let intentos = 0;
-let listaNumerosSorteados = [];
 let numeroMaximo = 10;
-let listaNumeroASortear = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-
+let listaNumerosSorteados = [];
+let listaNumeroASortear = [];
 
 const botonIntentar = document.getElementById("intentar");
 const botonReiniciar = document.getElementById("reiniciar");
-const textoRango = document.getElementById("rango");
-const botonPista = document.getElementById("pista");
-const rangoNormalSpan = document.querySelector(".rango-normal");
-const rangoPistaSpan = document.querySelector(".rango-pista");
+const botonMostrarResultado = document.getElementById("pista");
 
+const textoEnunciado = document.getElementById("texto-enunciado");
+const textoPista = document.getElementById("texto-pista");
+
+const imagenBase = "img/ia.png";
+const imagenDerrota = "img/pngDerrota.png"
+const animacionDerrota = "img/gifDerrota.gif";
+const imagenVictoria = "img/pngVictoria.png";
+const animacionVictoria = "img/gifVictoria.gif"
+
+function listaNumerosBase() {
+  listaNumeroASortear = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+}
+
+function activarBoton(boton) {
+  boton.removeAttribute("disabled");
+}
+function desactivarBoton(boton) {
+  boton.setAttribute("disabled", "true");
+}
+function cambiarImagen(pathImagen) {
+  document.getElementById("imagen").setAttribute("src", pathImagen);
+}
 
 function verificarIntento() {
+  intentos++;
+  let numeroDeUsuario = parseInt(document.getElementById("valorUsuario").value);
+  console.log(`introducido: ${numeroDeUsuario} secreto: ${numeroSecreto}`);
+  if (numeroDeUsuario === numeroSecreto) {
+    textoEnunciado.innerText = `Acertaste en el intento numero: ${intentos}`;
+    listaNumeroASortear = listaNumeroASortear.filter(
+      (numero) => numero !== numeroDeUsuario);
+    
+    cambiarImagen(animacionVictoria);
+    setTimeout(function(){cambiarImagen(imagenVictoria); },5000);
+    estadoBotonesDespuesDeSorteo();
 
-    let numeroDeUsuario = parseInt(document.getElementById("valorUsuario").value);
-    console.log(`introducido: ${numeroDeUsuario} secreto: ${numeroSecreto}`);
-    if (numeroDeUsuario === numeroSecreto) {
-        botonReiniciar.removeAttribute("disabled");
-        rangoNormalSpan.innerText = `Acertaste en el intento numero: ${intentos}`;
-        botonIntentar.setAttribute('disabled', 'true');
-        listaNumeroASortear = listaNumeroASortear.filter(numero => numero !== numeroDeUsuario);
-
-    } else {
-        actualizarEnunciado()
-    }
-    if (listaNumerosSorteados.length === 10) {
-        actualizarEnunciado();
-        botonIntentar.setAttribute('disabled', 'true');
-        listaNumeroASortear = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-        listaNumerosSorteados = [];
-        return;
-    }
-    intentos++;
-    return;
+  } else {
+    actualizarEnunciado();
+    let texto = `El número es ${
+      numeroDeUsuario < numeroSecreto ? "mayor" : "menor"
+    }`;
+    textoEnunciado.innerText = `Intento ${intentos}: ${texto} que ${numeroDeUsuario}`;
+  }
+  if (listaNumerosSorteados.length === 10) {
+    actualizarEnunciado();
+    listaNumerosBase();
+    estadoBotonesDespuesDeSorteo();
+    listaNumerosSorteados = [];
+  }
 }
 
 function reiniciarJuego() {
+  condicionesIniciales();
+  botonesEstadoInicial();
+  actualizarEnunciado();
+  cambiarImagen(imagenBase);
 
-    condicionesIniciales();
-    botonReiniciar.setAttribute('disabled', 'true');
-    botonIntentar.removeAttribute("disabled");
-    document.getElementById("imagen").setAttribute('src', 'img/ia.png');
-    listaNumeroASortear = listaNumeroASortear.length == 0 ? [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] : listaNumeroASortear;
-    actualizarEnunciado();
-
-
-    return;
+  if (listaNumeroASortear.length === 0) {
+    listaNumerosBase();
+  }
 }
 
+function botonesEstadoInicial() {
+  desactivarBoton(botonReiniciar);
+  activarBoton(botonIntentar);
+  activarBoton(botonMostrarResultado);
+}
 
+function estadoBotonesDespuesDeSorteo() {
+  desactivarBoton(botonIntentar);
+  desactivarBoton(botonMostrarResultado);
+  activarBoton(botonReiniciar);
+}
 
 function asignarTextoElemento(elemento, texto) {
-    let elementoHTML = document.querySelector(elemento);
-    elementoHTML.innerHTML = texto;
-    return;
+  document.querySelector(elemento).innerHTML = texto;
 }
-
 
 function generarNumeroSecreto() {
-    if (listaNumeroASortear.length === 0) {
-        return;
-    }
-    let indice = Math.floor(Math.random() * listaNumeroASortear.length);
-    let numeroGenerado = listaNumeroASortear[indice];
-    listaNumerosSorteados.push(numeroGenerado);
-    console.log(listaNumerosSorteados);
-    console.log(`Numero generado: ${numeroGenerado}`);
-    return numeroGenerado;
-}
+  if (listaNumeroASortear.length === 0) {
+    return;
+  }
+  let i = Math.floor(Math.random() * listaNumeroASortear.length);
+  let numeroGenerado = listaNumeroASortear[i];
+  listaNumerosSorteados.push(numeroGenerado);
+  console.log(listaNumerosSorteados.join(", "));
+  console.log(`Numero generado: ${numeroGenerado}`);
 
+  return numeroGenerado;
+}
 
 function condicionesIniciales() {
-    numeroSecreto = generarNumeroSecreto();
-    asignarTextoElemento("h1", "Juego del numero secreto");
-    intentos = 1;
-    botonReiniciar.setAttribute('disabled', 'true');
-    botonIntentar.removeAttribute("disabled");
-    document.getElementById("pista").removeAttribute("disabled");
-
-    return;
+  numeroSecreto = generarNumeroSecreto();
+  asignarTextoElemento("h1", "Juego del número secreto");
+  intentos = 0;
+  botonesEstadoInicial();
 }
-
 
 function mostrarRespuesta() {
-    rangoNormalSpan.innerText  = `El numero secreto es: ${numeroSecreto}`;
-    botonPista.setAttribute('disabled', 'true');
-    botonIntentar.setAttribute('disabled', 'true');
-    botonReiniciar.removeAttribute("disabled");
-    document.getElementById("imagen").setAttribute('src', 'img/iaSad.png');
-    listaNumeroASortear = listaNumeroASortear.filter(numero => numero !== numeroSecreto);
-    return;
+  textoEnunciado.innerText = `El número secreto era: ${numeroSecreto}`;
+  estadoBotonesDespuesDeSorteo();
+  listaNumeroASortear = listaNumeroASortear.filter(
+    (numero) => numero !== numeroSecreto);
+    
+    cambiarImagen(animacionDerrota);
+    setTimeout(function(){cambiarImagen(imagenDerrota); },4400);
+    
+    
 }
 
+function actualizarEnunciado() {
+  if (listaNumeroASortear.length > 0) {
+    const min = Math.min(...listaNumeroASortear);
+    const max = Math.max(...listaNumeroASortear);
+    textoEnunciado.innerText =
+      min === max
+        ? `Elige el numero ${min}`
+        : `Elige un numero del ${min} al ${max}`;
+    textoPista.innerText = `Números disponibles: ${listaNumeroASortear.join(
+      ", "
+    )}`;
+  } else {
+    textoEnunciado.innerText = "Sin números disponibles";
+    textoPista.innerText = "No hay números para mostrar la pista.";
+  }
+}
+
+listaNumerosBase();
 condicionesIniciales();
 actualizarEnunciado();
 
-
-function actualizarEnunciado() {
-    let textoNormal = "";
-    let textoPista = "";
-
-    if (listaNumeroASortear.length > 0) {
-        const min = Math.min(...listaNumeroASortear);
-        const max = Math.max(...listaNumeroASortear);
-       textoNormal= min === max ? `Elige el numero ${min}` : `Elige un numero del ${min} al ${max}`
-       textoPista = `Números disponibles: ${listaNumeroASortear.join(", ")}`;
-
-       
-    } else {
-           textoNormal = "Sin números disponibles";
-           textoPista = "No hay números para mostrar la pista.";
-    }
-    rangoNormalSpan.innerText = textoNormal;
-    rangoPistaSpan.innerText = textoPista;
-
-}
-
-document.getElementById("valorUsuario").addEventListener("keypress", function(event) {
+document
+  .getElementById("valorUsuario")
+  .addEventListener("keypress", function (event) {
     if (event.key === "Enter" && !botonIntentar.disabled) {
-        event.preventDefault();
-        verificarIntento();
+      event.preventDefault();
+      verificarIntento();
     }
-});
-
-
+  });

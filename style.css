@@ -54,6 +54,13 @@ body::before {
     padding: 3rem;
 }
 
+.container__imagen-persona {
+height: 200%;
+
+}
+
+
+
 .container__boton {
     border-radius: 16px;
     background: #1875e8;
@@ -70,7 +77,7 @@ body::before {
 }
 
 .container__boton:disabled:hover {
-    
+
     color: #FFF;
     font-weight: bold;
 
@@ -108,9 +115,9 @@ h1 {
     padding-bottom: 3rem;
 }
 
-p{ 
+p {
     font-family: 'Inter', sans-serif;
-      transition: all 0.3s ease;
+    transition: all 0.3s ease;
 }
 
 button {
@@ -128,42 +135,67 @@ button:hover {
 .texto__parrafo {
     font-size: 32px;
     font-weight: 400;
-    position: relative; /* Necesario para posicionar los spans absolutos */
-    min-height: 1.5em; /* Asegura que el párrafo tenga altura incluso con contenido superpuesto */
-    overflow: hidden; /* Opcional: recorta si el texto es muy largo y se sale */
-    text-align: center; /* Centra el texto si lo deseas */
+    position: relative;
+    /* Necesario para posicionar los spans absolutos */
+    min-height: 1.5em;
+    /* Asegura que el párrafo tenga altura incluso con contenido superpuesto */
+    overflow: hidden;
+    /* Opcional: recorta si el texto es muy largo y se sale */
+    text-align: center;
+    /* Centra el texto si lo deseas */
 }
 
 /* Estilos comunes para ambos spans para que se superpongan */
-.rango-normal,
-.rango-pista {
+.texto-enunciado,
+.texto-pista {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     /* Asegúrate de que el color sea blanco, como en tu CSS inicial */
-    color: white; 
-    transition: opacity 0.3s ease; /* Aplica la transición a la opacidad */
+    color: white;
+    transition: opacity 0.5s ease;
+    /* Aplica la transición a la opacidad */
     /* Otros estilos de fuente si no los quieres en .texto__parrafo */
 }
 
 /* Estado inicial: el rango normal es visible, la pista invisible */
-.rango-normal {
+.texto-enunciado {
     opacity: 1;
     font-size: 30px;
 }
 
-.rango-pista {
+.texto-pista {
     opacity: 0;
-    font-size: 24px; 
+
+    font-size: 24px;
+    left: 0px;
 }
 
 
-/* Al hacer hover en el párrafo: */
-.texto__parrafo:hover .rango-normal {
-    opacity: 0; /* El rango normal se desvanece */
+.texto__parrafo:hover .texto-enunciado {
+    opacity: 0;
+    /* El rango normal se desvanece */
 }
 
-.texto__parrafo:hover .rango-pista {
-    opacity: 1; /* La pista aparece */
+.texto__parrafo:hover .texto-pista {
+    opacity: 1;
+    /* La pista aparece */
+}
+
+
+.footer-audio {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 10px;
+    text-align: center;
+    z-index: 1000;
+}
+
+.footer-audio audio {
+    width: 90%;
+    max-width: 20%;
+    opacity: 0.2;
 }
