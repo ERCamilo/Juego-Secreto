@@ -41,7 +41,7 @@ function verificarIntento() {
       (numero) => numero !== numeroDeUsuario);
     
     cambiarImagen(animacionVictoria);
-    setTimeout(function(){cambiarImagen(imagenVictoria); },5000);
+    setTimeout(function(){cambiarImagen(imagenBase); },10000);
     estadoBotonesDespuesDeSorteo();
 
   } else {
@@ -113,7 +113,7 @@ function mostrarRespuesta() {
     (numero) => numero !== numeroSecreto);
     
     cambiarImagen(animacionDerrota);
-    setTimeout(function(){cambiarImagen(imagenDerrota); },4400);
+    setTimeout(function(){cambiarImagen(imagenBase); },5000);
     
     
 }
