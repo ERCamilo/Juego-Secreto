@@ -7,7 +7,7 @@ let listaNumeroASortear = [];
 const botonIntentar = document.getElementById("intentar");
 const botonReiniciar = document.getElementById("reiniciar");
 const botonMostrarResultado = document.getElementById("pista");
-const textBox = parseInt(document.getElementById("valorUsuario");
+const textBox = document.getElementById("valorUsuario");
 
 
 const textoEnunciado = document.getElementById("texto-enunciado");
@@ -34,7 +34,7 @@ function cambiarImagen(pathImagen) {
 }
 
 function verificarIntento() {
-let numeroDeUsuario = textBox.value;
+let numeroDeUsuario = parseInt(textBox.value);
   intentos++;
   
   console.log(`introducido: ${numeroDeUsuario} secreto: ${numeroSecreto}`);
