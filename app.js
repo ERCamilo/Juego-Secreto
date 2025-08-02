@@ -7,6 +7,8 @@ let listaNumeroASortear = [];
 const botonIntentar = document.getElementById("intentar");
 const botonReiniciar = document.getElementById("reiniciar");
 const botonMostrarResultado = document.getElementById("pista");
+const textBox = parseInt(document.getElementById("valorUsuario");
+
 
 const textoEnunciado = document.getElementById("texto-enunciado");
 const textoPista = document.getElementById("texto-pista");
@@ -32,15 +34,16 @@ function cambiarImagen(pathImagen) {
 }
 
 function verificarIntento() {
+let numeroDeUsuario = textBox.value;
   intentos++;
-  let numeroDeUsuario = parseInt(document.getElementById("valorUsuario").value);
+  
   console.log(`introducido: ${numeroDeUsuario} secreto: ${numeroSecreto}`);
   if (numeroDeUsuario === numeroSecreto) {
     textoEnunciado.innerText = `Acertaste en el intento numero: ${intentos}`;
     listaNumeroASortear = listaNumeroASortear.filter(
       (numero) => numero !== numeroDeUsuario);
     
-    cambiarImagen(animacionVictoria);
+    setTimeout((){cambiarImagen(animacionVictoria);},10);
     setTimeout(function(){cambiarImagen(imagenBase); },10000);
     estadoBotonesDespuesDeSorteo();
 
@@ -57,6 +60,8 @@ function verificarIntento() {
     estadoBotonesDespuesDeSorteo();
     listaNumerosSorteados = [];
   }
+
+  textBox.value ="";
 }
 
 function reiniciarJuego() {
@@ -112,8 +117,8 @@ function mostrarRespuesta() {
   listaNumeroASortear = listaNumeroASortear.filter(
     (numero) => numero !== numeroSecreto);
     
-    cambiarImagen(animacionDerrota);
-    setTimeout(function(){cambiarImagen(imagenBase); },5000);
+    setTimeout((){cambiarImagen(animacionDerrota);},10);
+    setTimeout(function(){cambiarImagen(imagenBase); },10000);
     
     
 }
