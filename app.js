@@ -40,7 +40,8 @@ function verificarIntento() {
     listaNumeroASortear = listaNumeroASortear.filter(
       (numero) => numero !== numeroDeUsuario);
     
-    setTimeout((){cambiarImagen(animacionVictoria);},10);
+    setTimeout(()=>{cambiarImagen(animacionVictoria);},10);
+    setTimeout(function(){cambiarImagen(imagenBase); },10000);
     estadoBotonesDespuesDeSorteo();
 
   } else {
@@ -113,7 +114,9 @@ function mostrarRespuesta() {
   listaNumeroASortear = listaNumeroASortear.filter(
     (numero) => numero !== numeroSecreto);
     
-    setTimeout((){cambiarImagen(animacionDerrota);},10);
+    setTimeout(()=>{cambiarImagen(animacionDerrota);},10);
+    setTimeout(function(){cambiarImagen(imagenBase); },10000);
+    
     
 }
 
